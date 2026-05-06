@@ -7,6 +7,7 @@ import productRoutes from "./routes/product.routes";
 import redis from "./config/redis";
 import esClient from "./config/elasticsearch";
 import { getChannel } from "./config/rabbitmq";
+import sequelize from "./config/database";
 
 const app = express();
 
@@ -51,8 +52,7 @@ app.get("/health", async (req: Request, res: Response) => {
   }
 
   try {
-    const { Sequelize } = await import("sequelize");
-    health.services.database = "connected";
+    await sequelize.authenticate();
   } catch {
     health.services.database = "disconnected";
   }
