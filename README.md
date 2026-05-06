@@ -219,16 +219,18 @@ npm start
 Expected startup output:
 
 ```
-✅ Database connected
-✅ Models synced
-✅ Redis connected
-✅ Elasticsearch connected
-✅ Elasticsearch index "products" created
-✅ Elasticsearch synced
-✅ RabbitMQ connected        { queue: 'stock_alerts' }
-👂 Stock alert consumer listening on queue: stock_alerts
-🚀 Server running on http://localhost:5000
-📄 API Docs at http://localhost:5000/api-docs
+Database connected
+Models synced
+Redis connected
+Elasticsearch connected
+Elasticsearch index "products" created
+Elasticsearch synced
+RabbitMQ connected        { queue: 'stock_alerts' }
+Stock alert consumer listening on queue: stock_alerts
+Server running on http://localhost:5000
+API Docs at http://localhost:5000/api-docs
+Server Health at http://localhost:5000/health
+
 ```
 
 ---
@@ -304,7 +306,7 @@ GET /api/products
        │
   ┌────┴────┐
   │         │
-HIT ✅    MISS ❌
+HIT       MISS
   │         │
 Return    Query PostgreSQL
 cached  → Store in Redis (TTL: 3600s)
@@ -382,8 +384,8 @@ curl -X POST http://localhost:5000/api/products \
 Expected terminal output:
 
 ```
-warn: 📤 Stock alert published    { productId: 1, stock: 5 }
-warn: 🔔 LOW STOCK ALERT received { productId: 1, currentStock: 5, threshold: 10 }
+warn: Stock alert published    { productId: 1, stock: 5 }
+warn: LOW STOCK ALERT received { productId: 1, currentStock: 5, threshold: 10 }
 ```
 
 Monitor the queue at: **http://localhost:15672** (admin/admin)
@@ -399,7 +401,7 @@ Monitor the queue at: **http://localhost:15672** (admin/admin)
 | `npx sequelize-cli db:migrate:undo:all`            | Rollback all migrations    |
 | `npx sequelize-cli migration:create --name <name>` | Create new migration       |
 
-> ⚠️ Never modify the DB schema manually. Always create a new migration.
+> Never modify the DB schema manually. Always create a new migration.
 
 ---
 
